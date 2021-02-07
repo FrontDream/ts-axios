@@ -21,3 +21,11 @@ export interface AxiosResponse{
 }
 
 export interface AxiosResponsePromise extends Promise<AxiosResponse>{}
+
+export interface AxiosError extends  Error{
+  config: AxiosRequestConfig,
+  request?: any,
+  response?: any,
+  code?:number | null,
+  isAxiosError?: boolean
+}
