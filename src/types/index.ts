@@ -1,5 +1,5 @@
 
-export type Method = 'get' | 'GET'| 'post' |'POST'|'delete'|'DELETE'|'patch'|'PATCH' |'put'|'PUT'
+export type Method = 'get' | 'GET'| 'post' |'POST'|'delete'|'DELETE'|'patch'|'PATCH' |'put'|'PUT' | 'head'| 'HEAD' |'options'|'OPTIONS'
 
 export interface AxiosRequestConfig{
   method?: Method,
@@ -11,8 +11,8 @@ export interface AxiosRequestConfig{
   timeout?: number,
 }
 
-export interface AxiosResponse{
-  data: any,
+export interface AxiosResponse<T=any>{
+  data: T,
   status: number,
   statusText: string,
   headers: any,
@@ -20,7 +20,7 @@ export interface AxiosResponse{
   request: any,
 }
 
-export interface AxiosResponsePromise extends Promise<AxiosResponse>{}
+export interface AxiosResponsePromise<T=any> extends Promise<AxiosResponse<T>>{}
 
 export interface AxiosError extends  Error{
   config: AxiosRequestConfig,
@@ -32,17 +32,18 @@ export interface AxiosError extends  Error{
 
 // 类类型
 export interface Axios {
-  request(config: AxiosRequestConfig):AxiosResponsePromise,
-  get(url: string, config?:AxiosRequestConfig): AxiosResponsePromise,
-  delete(url: string, config?:AxiosRequestConfig): AxiosResponsePromise,
-  head(url: string, config?:AxiosRequestConfig): AxiosResponsePromise,
-  option(url: string, config?:AxiosRequestConfig): AxiosResponsePromise,
-  post(url: string,data?:any, config?:AxiosRequestConfig): AxiosResponsePromise,
-  put(url: string,data?:any, config?:AxiosRequestConfig): AxiosResponsePromise,
-  put(url: string,data?:any, config?:AxiosRequestConfig): AxiosResponsePromise,
+  request<T=any>(config: AxiosRequestConfig):AxiosResponsePromise<T>,
+  get<T=any>(url: string, config?:AxiosRequestConfig): AxiosResponsePromise<T>,
+  delete<T=any>(url: string, config?:AxiosRequestConfig): AxiosResponsePromise<T>,
+  head<T=any>(url: string, config?:AxiosRequestConfig): AxiosResponsePromise<T>,
+  options<T=any>(url: string, config?:AxiosRequestConfig): AxiosResponsePromise<T>,
+  post<T=any>(url: string,data?:any, config?:AxiosRequestConfig): AxiosResponsePromise<T>,
+  put<T=any>(url: string,data?:any, config?:AxiosRequestConfig): AxiosResponsePromise<T>,
+  patch<T=any>(url: string,data?:any, config?:AxiosRequestConfig): AxiosResponsePromise<T>,
 }
 
 // 混合类型
 export interface  AxiosInstance extends Axios{
-  (config: AxiosRequestConfig): AxiosResponsePromise
+  <T=any>(config: AxiosRequestConfig): AxiosResponsePromise<T>
+  <T=any>(url: string, config?: AxiosRequestConfig): AxiosResponsePromise<T>
 }

@@ -1,11 +1,11 @@
-import { AxiosRequestConfig, AxiosResponsePromise, AxiosResponse } from './types';
+import { AxiosRequestConfig, AxiosResponsePromise, AxiosResponse } from '../types';
 import { xhr } from './xhr';
-import { buildURL } from './helpers/url';
-import { transformRequest, transformResponse } from './helpers/data';
-import { processHeaders } from './helpers/headers';
+import { buildURL } from '../helpers/url';
+import { transformRequest, transformResponse } from '../helpers/data';
+import { processHeaders } from '../helpers/headers';
 
 
-function  axios(config:AxiosRequestConfig):AxiosResponsePromise{
+export default  function  dispatchRequest(config:AxiosRequestConfig):AxiosResponsePromise{
   processConfig(config)
   return xhr(config).then(res=>{
     return transformResponseData(res)
@@ -24,9 +24,8 @@ function processConfig(config: AxiosRequestConfig){
 
 function transformUrl(config: AxiosRequestConfig){
   const { url, params } = config
-  return buildURL(url, params)
+  return buildURL(url!, params)
 }
-export default axios
 
 function transformRequestData(config: AxiosRequestConfig){
   return transformRequest(config.data)
