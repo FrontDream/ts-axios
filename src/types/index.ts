@@ -32,6 +32,10 @@ export interface AxiosError extends  Error{
 
 // 类类型
 export interface Axios {
+  interceptors: {
+    request: InterceptorManager<AxiosRequestConfig>,
+    response: InterceptorManager<AxiosResponse>
+  },
   request<T=any>(config: AxiosRequestConfig):AxiosResponsePromise<T>,
   get<T=any>(url: string, config?:AxiosRequestConfig): AxiosResponsePromise<T>,
   delete<T=any>(url: string, config?:AxiosRequestConfig): AxiosResponsePromise<T>,
@@ -57,6 +61,6 @@ export interface RejectFn{
 }
 
 export interface InterceptorManager<T>{
-  use(resolve: ResolvedFn<T>, reject: RejectFn): number,
+  use(resolve: ResolvedFn<T>, reject?: RejectFn): number,
   eject(id: number):void
 }
