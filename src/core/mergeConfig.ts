@@ -1,11 +1,11 @@
 import { AxiosRequestConfig } from '../types'
 import { deepMerge } from '../helpers/util'
 
-function stratDefault(val1: string, val2: string) {
+function stratDefault(val1: string, val2?: string) {
   return typeof val2 === 'undefined' ? val1 : val2
 }
 
-function stratFromVal2(val1: string, val2: string) {
+function stratFromVal2(val1: string, val2?: string) {
   if (typeof val2 !== 'undefined') {
     return val2
   }
@@ -27,7 +27,7 @@ keyStratDeepMerge.forEach(key => {
 
 export default function mergeConfig(
   config1: AxiosRequestConfig,
-  config2: AxiosRequestConfig
+  config2?: AxiosRequestConfig
 ): AxiosRequestConfig {
   const config = Object.create(null)
   if (!config2) {
@@ -45,7 +45,7 @@ export default function mergeConfig(
 
   function merge(key: string) {
     const strat = keyMap[key] || stratDefault
-    config[key] = strat(config1[key], config2[key])
+    config[key] = strat(config1[key], config2![key])
   }
   return config
 }

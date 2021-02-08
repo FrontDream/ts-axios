@@ -76,7 +76,7 @@ export interface AxiosInstance extends Axios {
 }
 
 export interface AxiosStatic extends AxiosInstance {
-  create(config: AxiosRequestConfig): AxiosInstance
+  create(config?: AxiosRequestConfig): AxiosInstance
   CancelToken: AxiosCancelStatic
   Cancel: CancelStatic
   isCancel: (val: any) => boolean
