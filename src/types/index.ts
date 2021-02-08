@@ -89,3 +89,26 @@ export interface InterceptorManager<T> {
 export interface AxiosTransformer {
   (data: any, headers?: any): any
 }
+
+export interface AxiosCancelToken {
+  promise: Promise<string>
+  reason?: string
+}
+
+export interface AxiosCancelExecutor {
+  (executor: AxiosCancer): void
+}
+
+export interface AxiosCancer {
+  (reason?: string): void
+}
+
+export interface CancelSource {
+  token: AxiosCancelToken
+  cancel: AxiosCancer
+}
+
+export interface AxiosCancelStatic {
+  new (executor: AxiosCancer): AxiosCancelToken
+  source(): CancelSource
+}
