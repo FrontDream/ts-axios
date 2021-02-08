@@ -71,6 +71,11 @@ export interface Axios {
   post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosResponsePromise<T>
   put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosResponsePromise<T>
   patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosResponsePromise<T>
+  getUri(config?: AxiosRequestConfig): string
+}
+
+export interface AxiosClassStatic {
+  new (config: AxiosRequestConfig): Axios
 }
 
 // 混合类型
@@ -84,6 +89,9 @@ export interface AxiosStatic extends AxiosInstance {
   CancelToken: AxiosCancelStatic
   Cancel: CancelStatic
   isCancel: (val: any) => boolean
+  all<T>(promises: Array<T | Promise<T>>): Promise<T[]>
+  spread<T, R>(callback: (...args: T[]) => R): (arr: T[]) => R
+  Axios: AxiosClassStatic
 }
 
 export interface ResolvedFn<T> {

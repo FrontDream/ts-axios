@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse, Method, ResolvedFn, RejectFn } from '../types'
 import InterceptorManager from './InterceptorManager'
-import dispatchRequest from './dispatchRequest'
+import dispatchRequest, { transformUrl } from './dispatchRequest'
 import mergeConfig from './mergeConfig'
 
 interface Interceptor {
@@ -81,5 +81,9 @@ export default class Axios {
   }
   _dispatchRequestEWithData(method: Method, url: string, data?: any, config?: AxiosRequestConfig) {
     return this.request(Object.assign(config || {}, { url, method, data }))
+  }
+  getUri(config?: AxiosRequestConfig): string {
+    config = mergeConfig(this.defaults, config)
+    return transformUrl(config)
   }
 }
