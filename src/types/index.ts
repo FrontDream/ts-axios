@@ -69,6 +69,10 @@ export interface AxiosInstance extends Axios {
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosResponsePromise<T>
 }
 
+export interface AxiosStatic extends AxiosInstance {
+  create(config: AxiosRequestConfig): AxiosInstance
+}
+
 export interface ResolvedFn<T> {
   (val: T): T | Promise<T>
 }
