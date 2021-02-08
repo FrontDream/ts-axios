@@ -31,13 +31,13 @@ app.use(express.static(__dirname, {
 }))
 
 app.use(bodyParser.json())
-// app.use(bodyParser.text())
+app.use(bodyParser.text())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
-// app.use(multipart({
-//   uploadDir: path.resolve(__dirname, 'upload-file')
-// }))
+app.use(multipart({
+  uploadDir: path.resolve(__dirname, 'upload-file')
+}))
 
 const router = express.Router()
 

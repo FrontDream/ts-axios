@@ -30,6 +30,8 @@ export interface AxiosRequestConfig {
   xsrfHeaderName?: string
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
+  auth?: AuthConfig
+  validateStatus?: (status: number) => boolean
   [key: string]: any
 }
 
@@ -129,4 +131,9 @@ export interface Cancel {
 
 export interface CancelStatic {
   new (reason?: string): Cancel
+}
+
+export interface AuthConfig {
+  username: string
+  password: string
 }
