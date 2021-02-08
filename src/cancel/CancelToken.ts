@@ -23,6 +23,11 @@ export default class CancelToken {
       promiseResolve(this.reason)
     })
   }
+  throwIfRequested() {
+    if (this.reason) {
+      throw this.reason
+    }
+  }
   static source(): CancelSource {
     let cancel!: AxiosCancer
     const token = new CancelToken(c => {

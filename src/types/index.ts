@@ -24,6 +24,7 @@ export interface AxiosRequestConfig {
   timeout?: number
   transformRequest?: AxiosTransformer | AxiosTransformer[]
   transformResponse?: AxiosTransformer | AxiosTransformer[]
+  cancelToken?: AxiosCancelToken
   [key: string]: any
 }
 
@@ -96,6 +97,7 @@ export interface AxiosTransformer {
 export interface AxiosCancelToken {
   promise: Promise<Cancel>
   reason?: Cancel
+  throwIfRequested(): void
 }
 
 export interface AxiosCancelExecutor {
