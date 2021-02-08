@@ -1,16 +1,17 @@
-import { AxiosCancelExecutor, AxiosCancer } from '../types'
+import { AxiosCancelExecutor, AxiosCancer, CancelSource } from '../types'
+import Cancel from './Cancel'
 
 interface PromiseResolve {
-  (reason?: string): void
+  (reason?: Cancel): void
 }
 
 export default class CancelToken {
-  promise: Promise<string>
-  reason?: string
+  promise: Promise<Cancel>
+  reason?: Cancel
 
   constructor(executor: AxiosCancelExecutor) {
     let promiseResolve: PromiseResolve
-    this.promise = new Promise<string>(resolve => {
+    this.promise = new Promise<Cancel>(resolve => {
       promiseResolve = resolve
     })
 
@@ -18,11 +19,11 @@ export default class CancelToken {
       if (this.reason) {
         return
       }
-      this.reason = message
+      this.reason = new Cancel(message)
       promiseResolve(this.reason)
     })
   }
-  static source() {
+  static source(): CancelSource {
     let cancel!: AxiosCancer
     const token = new CancelToken(c => {
       cancel = c
