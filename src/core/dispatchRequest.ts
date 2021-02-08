@@ -1,13 +1,13 @@
-import { AxiosRequestConfig, AxiosResponsePromise, AxiosResponse } from '../types';
-import { xhr } from './xhr';
-import { buildURL } from '../helpers/url';
-import { transformRequest, transformResponse } from '../helpers/data';
-import { processHeaders } from '../helpers/headers';
+import { AxiosRequestConfig, AxiosResponsePromise, AxiosResponse } from '../types'
+import { xhr } from './xhr'
+import { buildURL } from '../helpers/url'
+import { transformRequest, transformResponse } from '../helpers/data'
+import { flattenHeaders, processHeaders } from '../helpers/headers'
+import transform from './transform'
 
-
-export default  function  dispatchRequest(config:AxiosRequestConfig):AxiosResponsePromise{
+export default function dispatchRequest(config: AxiosRequestConfig): AxiosResponsePromise {
   processConfig(config)
-  return xhr(config).then(res=>{
+  return xhr(config).then(res => {
     return transformResponseData(res)
   })
 }
@@ -16,26 +16,18 @@ export default  function  dispatchRequest(config:AxiosRequestConfig):AxiosRespon
  * 处理config
  * @param config
  */
-function processConfig(config: AxiosRequestConfig){
+function processConfig(config: AxiosRequestConfig) {
   config.url = transformUrl(config)
-  config.headers = transformHeaders(config)
-  config.data = transformRequestData(config)
+  config.data = transform(config.data, config.headers, config.transformRequest)
+  config.headers = flattenHeaders(config.headers, config.method!)
 }
 
-function transformUrl(config: AxiosRequestConfig){
+function transformUrl(config: AxiosRequestConfig) {
   const { url, params } = config
   return buildURL(url!, params)
 }
 
-function transformRequestData(config: AxiosRequestConfig){
-  return transformRequest(config.data)
-}
-
-function transformHeaders(config: AxiosRequestConfig){
-  const { headers={}, data } = config
-  return processHeaders(headers, data)
-}
-function transformResponseData(res: AxiosResponse){
-  const data = transformResponse(res.data)
-  return {...res, data}
+function transformResponseData(res: AxiosResponse) {
+  const data = transform(res.data, res.headers, res.config.transformResponse)
+  return { ...res, data }
 }
