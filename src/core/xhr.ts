@@ -91,7 +91,6 @@ export function xhr(config: AxiosRequestConfig): AxiosResponsePromise {
       }
       if (auth) {
         headers['Authorization'] = 'Basic ' + btoa(`${auth.username}:${auth.password}`)
-        // headers['Authorization'] = 'Basic ' + btoa(auth.username + ':' + auth.password)
       }
       if ((withCredentials || isURLSameOrigin(url!)) && xsrfCookieName) {
         const xsrfValue = cookie.read(xsrfCookieName)

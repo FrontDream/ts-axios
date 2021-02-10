@@ -9,6 +9,7 @@ import Cancel, { isCancel } from './cancel/Cancel'
 function createInstance(config: AxiosRequestConfig): AxiosStatic {
   const instance = new Axios(config)
   const request = Axios.prototype.request.bind(instance)
+  // 混合对象
   extend(request, instance)
   return request as AxiosStatic
 }
