@@ -68,7 +68,6 @@ export function xhr(config: AxiosRequestConfig): AxiosResponsePromise {
           request,
           headers: responseHeaders
         }
-        console.log('response:', response)
         handleResponse(response)
       }
       request.onerror = function handleError() {
